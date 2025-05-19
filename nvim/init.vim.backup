@@ -1,0 +1,56 @@
+call plug#begin()
+
+" List Plugins 
+Plug 'preservim/nerdtree'
+Plug 'folke/tokyonight.nvim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'nvim-lua/plenary.nvim'
+
+call plug#end()
+
+" Binds
+let mapleader = " "
+
+set showmatch
+set ignorecase
+set hlsearch
+set tabstop=4
+set softtabstop=4
+set expandtab
+set shiftwidth=4
+set autoindent
+set number
+syntax on
+
+nnoremap <silent> <leader>e :NERDTreeToggle<CR>
+nnoremap <silent> <leader>wv :vsplit<CR>
+nnoremap <silent> <leader>wh :split<CR>
+nnoremap <silent> <leader>wq :close<CR>
+nnoremap <silent> <C-h> <C-w>h
+nnoremap <silent> <C-j> <C-w>j
+nnoremap <silent> <C-k> <C-w>k
+nnoremap <silent> <C-l> <C-w>l
+
+colorscheme tokyonight-night
+
+lua << EOF
+  require("mason").setup()
+
+  require("mason-lspconfig").setup {
+    ensure_installed = { "pyright" },
+  }
+
+  local lspconfig = require("lspconfig")
+  lspconfig.pyright.setup{}
+EOF
+
+
+colorscheme tokyonight-night
+
+" Removes background
+highlight Normal guibg=none
+highlight NonText guibg=none
+highlight Normal ctermbg=none
+highlight NonText ctermbg=none
